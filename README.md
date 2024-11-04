@@ -1,4 +1,4 @@
-# Documentação da API de Pesquisa Eleitoral
+# Documentação API de Pesquisa Eleitoral
 ## Visão Geral
 Esta aplicação foi desenvolvida e tem como objetivo estimar a intenção de votos nas eleições para presidente do Brasil. A aplicação considera as diferenças de intenção de votos entre municípios de diferentes portes e permite a sincronização de dados com uma base externa, utilizando dados do IBGE.
 
@@ -74,7 +74,8 @@ Para configurar e rodar o sistema, siga os passos abaixo:
       POST /api/election-poll
       Content-Type: multipart/form-data
 
-      **ARQUIVO CSV**
+![image](https://github.com/user-attachments/assets/b694b0be-3206-4377-8bfc-c4ee2cfde044)
+
 
 3. **GET  /api/temporal-evolution** - Lista Evolução das Pesquisas.
    ```bash
