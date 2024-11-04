@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Instalar dependências de produção e desenvolvimento
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Copiar todo o código do projeto para dentro do contêiner
 COPY . .
@@ -42,4 +42,4 @@ RUN npm install
 EXPOSE 3000
 
 # Comando para rodar a aplicação
-CMD ["dockerize", "-wait", "tcp://mysql:3306", "-wait", "tcp://rabbitmq:5672", "-timeout", "30s","node", "dist/main/server.js"]
+CMD ["dockerize", "-wait", "tcp://mongodb:27017", "-timeout", "30s","node", "dist/main/server.js"]
