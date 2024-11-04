@@ -11,7 +11,7 @@ O sistema é dividido em serviços desacoplados, no qual respeitam designs e arq
 
 ## Funcionalidades
 
-- **Sincronização de Dados**: A aplicação sincroniza os dados da base de municípios e estados brasileiros, e pode ser acionada manualmente pelo usuário através da uma requisição POST na API.
+- **Sincronização de Dados**: A aplicação sincroniza os dados da base de municípios e estados brasileiros, e pode ser acionada manualmente pelo usuário através da uma requisição POST na API ou automaticamnente através de uma função cron pré agendada mensalmente.
   
 - **Importação de Pesquisas Eleitorais**: O sistema pode importar arquivos CSV, contendo listas de intenção de votos, que incluem informações sobre o ID da pesquisa, data, município, estado e intenção de voto para cada candidato.
 
@@ -21,7 +21,7 @@ O sistema é dividido em serviços desacoplados, no qual respeitam designs e arq
 
 ## Explicação
 ### Sincronização de Dados
-Para este serviço, foi criada uma rota na API que, ao ser chamada, invoca um serviço que se conecta à API do IBGE(camada infra) para obter dados de localidades. No entanto, foi identificado um problema: a API não fornece informações sobre o número de habitantes. Para contornar essa limitação, estou gerando números aleatórios entre um até 12 milhões, para substituir esses dados. Dessa forma, todos os campos serão corretamente persistidos no banco de dados.
+Para este serviço, foi criada uma rota na API e uma função pré agendada(cron) que, ao ser chamada, invoca um serviço que se conecta à API do IBGE(camada infra) para obter dados de localidades. No entanto, foi identificado um problema: a API não fornece informações sobre o número de habitantes. Para contornar essa limitação, estou gerando números aleatórios entre um até 12 milhões, para substituir esses dados. Dessa forma, todos os campos serão corretamente persistidos no banco de dados.
 
 ### Importação de Pesquisas Eleitorais
 Foi implementada uma camada externa CSV responsável por converter os campos do arquivo CSV para o formato TypeScript, utilizando uma biblioteca específica. Os dados convertidos são, então, enviados para o use case para o cálculo dos votos.
