@@ -1,4 +1,4 @@
-# Documentação da API de Pesquisa eleitoral
+# Documentação da API de Pesquisa Eleitoral
 ## Visão Geral
 Esta aplicação foi desenvolvida e tem como objetivo estimar a intenção de votos nas eleições para presidente do Brasil. A aplicação considera as diferenças de intenção de votos entre municípios de diferentes portes e permite a sincronização de dados com uma base externa, utilizando dados do IBGE.
 
@@ -17,11 +17,11 @@ O sistema é dividido em serviços desacoplados, no qual respeitam designs e arq
 
 - **Cálculo de Intenção de Votos**: A aplicação calcula a intenção de votos para cada candidato com base no porte de cada município e no estado. Os cálculos são ponderados conforme a quantidade de habitantes da região.
 
-- **Lista Evolução**: Através de um rewuisição GET, podemos acompanhar a evolução temporal das intenções de votos, permitindo uma visualização em quantidades e porcentagem.
+- **Lista Evolução**: Através de um requisição GET, podemos acompanhar a evolução temporal das intenções de votos, permitindo uma visualização em quantidades e porcentagem.
 
 ## Explicação
 ### Sincronização de Dados
-Para este serviço, foi criada uma rota na API que, ao ser chamada, invoca um serviço que se conecta à API do IBGE(camada infra) para obter dados de localidades. No entanto, foi identificado um problema: a API não fornece informações sobre o número de habitantes. Para contornar essa limitação, estou gerando números aleatórios para substituir esses dados. Dessa forma, todos os campos serão corretamente persistidos no banco de dados.
+Para este serviço, foi criada uma rota na API que, ao ser chamada, invoca um serviço que se conecta à API do IBGE(camada infra) para obter dados de localidades. No entanto, foi identificado um problema: a API não fornece informações sobre o número de habitantes. Para contornar essa limitação, estou gerando números aleatórios entre um até 12 milhões, para substituir esses dados. Dessa forma, todos os campos serão corretamente persistidos no banco de dados.
 
 ### Importação de Pesquisas Eleitorais
 Foi implementada uma camada externa CSV responsável por converter os campos do arquivo CSV para o formato TypeScript, utilizando uma biblioteca específica. Os dados convertidos são, então, enviados para o use case para o cálculo dos votos.
@@ -34,7 +34,7 @@ Foi implementada uma camada externa CSV responsável por converter os campos do 
    - O cálculo é feito da seguinte maneira: Intenção de Voto Ponderada = Intenção de Voto × Peso do Grupo
    - A intenção de voto ponderada é então acumulada para cada candidato em todos os municípios.
 4. Total de votos: é realizado a somatório do total obtido entre ambos os candidatos.
-5. Porcentagem de votos:  a partil do valor total de votos, conseguimos calcular a porcentagem de votos de cada candidato, o calculo realizado foi: (votes / totalVotes) * 100
+5. Porcentagem de votos:  a partir do valor total de votos, conseguimos calcular a porcentagem de votos de cada candidato, o calculo realizado foi: (votes / totalVotes) * 100.
 6. Persistência dos resultados: Os resultados calculados são persistidos no banco de dados, garantindo que todas as informações estejam disponíveis para análises futuras e visualização.
 
 ### Lista Evolução das Pesquisas
@@ -66,7 +66,8 @@ Para configurar e rodar o sistema, siga os passos abaixo:
 ## API Endpoints
 1. **POST /api/update-cities** - Atualiza as informações de município.
    ```bash
-   POST /api/update-cities   Content-Type: application/json
+   POST /api/update-cities
+   Content-Type: application/json
       
 2. **POST  /api/election-poll** - Realiza a importação de Pesquisas Eleitorais.
       ```bash
