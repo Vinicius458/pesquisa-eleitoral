@@ -19,6 +19,10 @@ O sistema é dividido em serviços desacoplados, no qual respeitam designs e arq
 
 - **Lista Evolução**: Através de um requisição GET, podemos acompanhar a evolução temporal das intenções de votos, permitindo uma visualização em quantidades e porcentagem.
 
+  **Antes de importar um arquivo CSV, é necessário que atualize os dados do municípios, por tanto faça uma requisição Post para /update-cities. Sempre que for importar pesquisas, garanta que o arquivo CSV esteja com o tipo de ficheiro como CSV UTF-8**.
+  ![Captura de tela 2024-11-04 022238](https://github.com/user-attachments/assets/fa076762-cdb2-4bd1-b8e7-39b5dda6cab6)
+
+
 ## Explicação
 ### Sincronização de Dados
 Para este serviço, foi criada uma rota na API e uma função pré agendada(cron) que, ao ser chamada, invoca um serviço que se conecta à API do IBGE(camada infra) para obter dados de localidades. No entanto, foi identificado um problema: a API não fornece informações sobre o número de habitantes. Para contornar essa limitação, estou gerando números aleatórios entre um até 12 milhões, para substituir esses dados. Dessa forma, todos os campos serão corretamente persistidos no banco de dados.
@@ -64,6 +68,8 @@ Para configurar e rodar o sistema, siga os passos abaixo:
  4. A aplicação estará disponível na porta 3000.
 
 ## API Endpoints
+Para fazer uma requisição, basta colocar: seu_host/api/rota_desejada
+
 1. **POST /api/update-cities** - Atualiza as informações de município.
    ```bash
    POST /api/update-cities
