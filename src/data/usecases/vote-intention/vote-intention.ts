@@ -22,12 +22,10 @@ export class VoteIntentionUseCase implements VotingIntention {
         pollId = poll.id;
         pollDate = poll.date;
       }
-      // Busca a cidade pelo nome para obter o grupo
       const city = await this.cityRepository.findByName(cityName);
       if (city) {
         const groupWeight = city.getWeightByPopulation();
         const weightedVotes = city.population * groupWeight;
-        // Adiciona os votos ao candidato vencedor
         if (!electionResults[candidate]) {
           electionResults[candidate] = 0;
         }
@@ -36,13 +34,11 @@ export class VoteIntentionUseCase implements VotingIntention {
       }
     }
 
-    // Calcula o total de votos ponderados
     const totalVotes = Object.values(electionResults).reduce(
       (total, votes) => total + votes,
       0
     );
 
-    // Calcula a porcentagem para cada candidato
     const results = Object.entries(electionResults).map(
       ([candidate, votes]) => {
         const percentage = parseFloat(((votes / totalVotes) * 100).toFixed(2));
