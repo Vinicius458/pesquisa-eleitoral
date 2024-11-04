@@ -7,9 +7,8 @@ export class UpdateCitiesController implements Controller {
 
   async handle(): Promise<HttpResponse> {
     try {
-      const saveCities = await this.saveCitiesUseCase.execute();
-
-      return ok(saveCities);
+      await this.saveCitiesUseCase.execute();
+      return ok({ message: "City ​​updated successfully" });
     } catch (error: any) {
       return serverError(error);
     }
